@@ -1,21 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="tank_client.MainPage">
+             x:Class="tank_client.MainPage"
+             Title="00">
 
-    <ContentView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"  
-            VerticalOptions="Center">
+    <VerticalStackLayout
+        Spacing="0"
+        Padding="0,0"  
+        VerticalOptions="Center">
 
-            <Image
+        <Image
                 Source="rei.jpg"
                 SemanticProperties.Description="Rei from evongalion as a fast food employee!"
                 HorizontalOptions="Center"
-                WidthRequest="2000"/>
+                WidthRequest="2000">
+            
+            <Image.GestureRecognizers>
+                <PointerGestureRecognizer
+                                  PointerMoved="OnPointerMoved" />
+            </Image.GestureRecognizers>
 
-        </VerticalStackLayout>
-    </ContentView>
+        </Image>
+
+    </VerticalStackLayout>
 
 </ContentPage>
