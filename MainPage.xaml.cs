@@ -42,6 +42,12 @@ public partial class MainPage : ContentPage
 
     private void BattlegroundReleased(object sender, EventArgs e)
     {
+        Log($"Battlegrounds new position is X: {battleground.TranslationX} Y: {battleground.TranslationY}");
         pressed = false;
+    }
+
+    private void Log(string msg)
+    {
+        logView.Text = msg + "\n" + logView.Text;
     }
 }

@@ -4,29 +4,36 @@
              x:Class="tank_client.MainPage"
              Title="00">
 
-    <VerticalStackLayout
-        Spacing="0"
+    <AbsoluteLayout
         Padding="0,0"  
         VerticalOptions="Center">
 
-        
-        
-        <VerticalStackLayout.GestureRecognizers>
+        <AbsoluteLayout.GestureRecognizers>
             <PointerGestureRecognizer
                                   PointerMoved="MoveBattleground" />
-        </VerticalStackLayout.GestureRecognizers>
-        <ImageButton
+        </AbsoluteLayout.GestureRecognizers>
+
+
+            <ImageButton
                 x:Name="battleground"
                 Source="rei.jpg"
                 SemanticProperties.Description="Rei from evongalion as a fast food employee!"
                 HorizontalOptions="Center"
                 WidthRequest="2000"
                 Pressed="BattlegroundPressed"
-                Released="BattlegroundReleased">
+                Released="BattlegroundReleased" />
 
+        <ScrollView
+            HorizontalScrollBarVisibility="Always"
+            AbsoluteLayout.LayoutBounds="3, 0">
+            
+            <Label
+            x:Name="logView"
+            Text="AAAAAH"
+            HeightRequest="200"
+            />
+        </ScrollView>
 
-        </ImageButton>
-
-    </VerticalStackLayout>
+    </AbsoluteLayout>
 
 </ContentPage>
