@@ -9,18 +9,23 @@
         Padding="0,0"  
         VerticalOptions="Center">
 
-        <Image
+        
+        
+        <VerticalStackLayout.GestureRecognizers>
+            <PointerGestureRecognizer
+                                  PointerMoved="MoveBattleground" />
+        </VerticalStackLayout.GestureRecognizers>
+        <ImageButton
+                x:Name="battleground"
                 Source="rei.jpg"
                 SemanticProperties.Description="Rei from evongalion as a fast food employee!"
                 HorizontalOptions="Center"
-                WidthRequest="2000">
-            
-            <Image.GestureRecognizers>
-                <PointerGestureRecognizer
-                                  PointerMoved="OnPointerMoved" />
-            </Image.GestureRecognizers>
+                WidthRequest="2000"
+                Pressed="BattlegroundPressed"
+                Released="BattlegroundReleased">
 
-        </Image>
+
+        </ImageButton>
 
     </VerticalStackLayout>
 
