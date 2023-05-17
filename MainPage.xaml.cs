@@ -32,6 +32,9 @@ public partial class MainPage : ContentPage
 
         battleground.TranslationX = pos.Value.X - anchorX;
         battleground.TranslationY = pos.Value.Y - anchorY;
+
+        //movable.TranslationX = pos.Value.X - anchorX;
+        //movable.TranslationY = pos.Value.Y - anchorY;
     }
 
     private void BattlegroundPressed(object sender, EventArgs e)

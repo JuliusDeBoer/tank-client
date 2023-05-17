@@ -13,9 +13,9 @@
                                   PointerMoved="MoveBattleground" />
         </AbsoluteLayout.GestureRecognizers>
 
+        <AbsoluteLayout x:Name="battleground">
 
             <ImageButton
-                x:Name="battleground"
                 Source="rei.jpg"
                 SemanticProperties.Description="Rei from evongalion as a fast food employee!"
                 HorizontalOptions="Center"
@@ -23,13 +23,31 @@
                 Pressed="BattlegroundPressed"
                 Released="BattlegroundReleased" />
 
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100" />
+                    <RowDefinition Height="100" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <ImageButton WidthRequest="100" Source="tank.png" Grid.Row="1" Grid.Column="1" />
+                <ImageButton WidthRequest="100" Source="tank.png" Grid.Row="2" Grid.Column="2" />
+            </Grid>
+
+            
+        </AbsoluteLayout>
+
+
         <ScrollView
             HorizontalScrollBarVisibility="Always"
             AbsoluteLayout.LayoutBounds="3, 0">
             
             <Label
             x:Name="logView"
-            Text="AAAAAH"
             HeightRequest="200"
             />
         </ScrollView>
