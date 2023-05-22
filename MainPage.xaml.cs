@@ -1,4 +1,6 @@
-﻿namespace tank_client;
+﻿using Microsoft.AspNet.SignalR.Client;
+
+namespace tank_client;
 
 public partial class MainPage : ContentPage
 {
@@ -10,6 +12,18 @@ public partial class MainPage : ContentPage
     public MainPage()
     {
         InitializeComponent();
+
+        HubConnection connection = new("http://127.0.0.1:6666/a");
+        IHubProxy hubProxy = connection.CreateHubProxy("TankHub");
+
+        // TODO: Check if thsi throws an exception
+        connection.Start().Wait();
+
+        hubProxy.Invoke("Scream");
+
+        Log("Screamed?");
+
+        //hubProxy.On("MoveTank");
     }
 
     void MoveBattleground(object sender, PointerEventArgs e)
