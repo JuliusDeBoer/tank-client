@@ -9,7 +9,7 @@ public partial class MainPage : ContentPage
     private double anchorX = 0;
     private double anchorY = 0;
 
-    private HubConnection connection;
+    private readonly HubConnection connection;
 
     public MainPage()
     {
@@ -17,11 +17,22 @@ public partial class MainPage : ContentPage
 
         // TODO: Check for exceptions
         connection = new HubConnectionBuilder()
-            .WithUrl("http://localhost:6666/hub")
+            .WithUrl("http://localhost:6666/api/v1/hub")
             .WithAutomaticReconnect()
             .Build();
 
-        connection.StartAsync();
+
+        Log("Connecting...");
+
+        try
+        {
+            connection.StartAsync().Wait();
+        } catch (Exception ex)
+        {
+            Log($"ERROR: Could not connect ({ex.Message})");
+        }
+
+        Log("Connected!");
     }
 
     void MoveBattleground(object sender, PointerEventArgs e)
@@ -64,5 +75,40 @@ public partial class MainPage : ContentPage
     private void Log(string msg)
     {
         logView.Text = msg + "\n" + logView.Text;
+    }
+
+    private class Position
+    {
+        public int X { get; set; }
+        public int Y { get; set; }
+    }
+
+    private class Tank
+    {
+        public int Id { get; set; }
+        public int Health { get; set; }
+        public int Level { get; set; }
+        public int ActionPoints { get; set; }
+        public int Color { get; set; }
+        public Position Position { get; set; }
+    }
+
+    private class TankCollection
+    {
+        public int Total { get; set; }
+        public Tank[] Tanks { get; set; }
+    }
+
+    private void ImageButton_Clicked(object sender, EventArgs e)
+    {
+        //Task task = connection.InvokeAsync("GetServerInfo");
+        //ServerInfo version = task.St;
+        connection.StartAsync();
+        
+        Task<TankCollection> task = connection.InvokeAsync<TankCollection>("GetTanks");
+
+        xTankCollection tanks = task.Result;
+
+        Log($"Total tanks: {tanks.Total}");
     }
 }
