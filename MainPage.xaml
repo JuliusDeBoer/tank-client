@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="tank_client.MainPage"
-             Title="00">
+             x:Class="tank_client.MainPage">
 
     <AbsoluteLayout
         Padding="0,0"  
@@ -12,6 +11,16 @@
             <PointerGestureRecognizer
                                   PointerMoved="MoveBattleground" />
         </AbsoluteLayout.GestureRecognizers>
+
+        <ScrollView
+            HorizontalScrollBarVisibility="Always"
+            AbsoluteLayout.LayoutBounds="3, 0">
+
+            <Label
+                x:Name="logView"
+                HeightRequest="200"/>
+            
+        </ScrollView>
 
         <AbsoluteLayout x:Name="battleground">
 
@@ -38,19 +47,7 @@
                 <ImageButton WidthRequest="100" Source="tank.png" Grid.Row="2" Grid.Column="2" Clicked="ImageButton_Clicked" />
             </Grid>
 
-            
         </AbsoluteLayout>
-
-
-        <ScrollView
-            HorizontalScrollBarVisibility="Always"
-            AbsoluteLayout.LayoutBounds="3, 0">
-            
-            <Label
-            x:Name="logView"
-            HeightRequest="200"
-            />
-        </ScrollView>
 
     </AbsoluteLayout>
 

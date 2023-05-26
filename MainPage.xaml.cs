@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
+using tank_client.Models;
 
 namespace tank_client;
 
@@ -9,29 +10,21 @@ public partial class MainPage : ContentPage
     private double anchorX = 0;
     private double anchorY = 0;
 
-    private readonly HubConnection connection;
+    private readonly Server server;
 
     public MainPage()
     {
         InitializeComponent();
 
-        // TODO: Check for exceptions
-        connection = new HubConnectionBuilder()
-            .WithUrl("http://localhost:6666/api/v1/hub")
-            .WithAutomaticReconnect()
-            .Build();
+        server = new Server();
 
+        new Thread(Connect).Start();
+    }
 
+    private void Connect()
+    {
         Log("Connecting...");
-
-        try
-        {
-            connection.StartAsync().Wait();
-        } catch (Exception ex)
-        {
-            Log($"ERROR: Could not connect ({ex.Message})");
-        }
-
+        server.Connect();
         Log("Connected!");
     }
 
@@ -72,11 +65,6 @@ public partial class MainPage : ContentPage
         pressed = false;
     }
 
-    private void Log(string msg)
-    {
-        logView.Text = msg + "\n" + logView.Text;
-    }
-
     private class Position
     {
         public int X { get; set; }
@@ -103,12 +91,20 @@ public partial class MainPage : ContentPage
     {
         //Task task = connection.InvokeAsync("GetServerInfo");
         //ServerInfo version = task.St;
-        connection.StartAsync();
+        //connection.StartAsync();
         
-        Task<TankCollection> task = connection.InvokeAsync<TankCollection>("GetTanks");
+        //Task<TankCollection> task = connection.InvokeAsync<TankCollection>("GetTanks");
 
-        xTankCollection tanks = task.Result;
+        //TankCollection tanks = task.Result;
 
-        Log($"Total tanks: {tanks.Total}");
+        //Log($"Total tanks: {tanks.Total}");
+    }
+
+    public void Log(string msg)
+    {
+        // Make sure code gets run on the UI's dispatcher thread
+        Dispatcher.Dispatch(() => {
+            logView.Text = msg + "\n" + logView.Text;
+        });
     }
 }
