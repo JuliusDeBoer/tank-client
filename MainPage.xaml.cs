@@ -89,15 +89,9 @@ public partial class MainPage : ContentPage
 
     private void ImageButton_Clicked(object sender, EventArgs e)
     {
-        //Task task = connection.InvokeAsync("GetServerInfo");
-        //ServerInfo version = task.St;
-        //connection.StartAsync();
-        
-        //Task<TankCollection> task = connection.InvokeAsync<TankCollection>("GetTanks");
+        TankCollection collection = server.Invoke<TankCollection>("GetTanks");
 
-        //TankCollection tanks = task.Result;
-
-        //Log($"Total tanks: {tanks.Total}");
+        Log($"Total tanks: {collection.Total}");
     }
 
     public void Log(string msg)
