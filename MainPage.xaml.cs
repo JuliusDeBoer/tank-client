@@ -10,22 +10,9 @@ public partial class MainPage : ContentPage
     private double anchorX = 0;
     private double anchorY = 0;
 
-    private readonly Server server;
-
     public MainPage()
     {
         InitializeComponent();
-
-        server = new Server();
-
-        new Thread(Connect).Start();
-    }
-
-    private void Connect()
-    {
-        Log("Connecting...");
-        server.Connect();
-        Log("Connected!");
     }
 
     void MoveBattleground(object sender, PointerEventArgs e)
@@ -89,7 +76,7 @@ public partial class MainPage : ContentPage
 
     private void ImageButton_Clicked(object sender, EventArgs e)
     {
-        TankCollection collection = server.Invoke<TankCollection>("GetTanks");
+        TankCollection collection = Server.Invoke<TankCollection>("GetTanks");
 
         Log($"Total tanks: {collection.Total}");
     }

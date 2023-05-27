@@ -1,3 +1,5 @@
+using tank_client.Models;
+
 namespace tank_client;
 
 public partial class TitlePage : ContentPage
@@ -5,6 +7,8 @@ public partial class TitlePage : ContentPage
 	public TitlePage()
 	{
 		InitializeComponent();
+
+        new Thread(Server.Connect).Start();
     }
 
     private void Start(Object sender, EventArgs e)
