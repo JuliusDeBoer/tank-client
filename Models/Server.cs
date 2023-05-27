@@ -34,7 +34,7 @@ namespace tank_client.Models
             Connection.InvokeAsync(methodName);
         }
 
-        public static object Invoke<T>(string methodName, object arg1)
+        public static T Invoke<T>(string methodName, object arg1)
         {
             Task<T> task = Connection.InvokeAsync<T>(methodName, arg1);
             return task.Result;
@@ -45,7 +45,7 @@ namespace tank_client.Models
             Connection.InvokeAsync(methodName, arg1);
         }
 
-        public static object Invoke<T>(string methodName, object arg1, object arg2)
+        public static T Invoke<T>(string methodName, object arg1, object arg2)
         {
             Task<T> task = Connection.InvokeAsync<T>(methodName, arg1, arg2);
             return task.Result;
@@ -55,7 +55,7 @@ namespace tank_client.Models
             Connection.InvokeAsync(methodName, arg1, arg2);
         }
 
-        public static object Invoke<T>(string methodName, object arg1, object arg2, object arg3)
+        public static T Invoke<T>(string methodName, object arg1, object arg2, object arg3)
         {
             Task<T> task = Connection.InvokeAsync<T>(methodName, arg1, arg2, arg3);
             return task.Result;
@@ -65,7 +65,7 @@ namespace tank_client.Models
             Connection.InvokeAsync(methodName, arg1, arg2, arg3);
         }
 
-        public static object Invoke<T>(string methodName, object arg1, object arg2, object arg3, object arg4)
+        public static T Invoke<T>(string methodName, object arg1, object arg2, object arg3, object arg4)
         {
             Task<T> task = Connection.InvokeAsync<T>(methodName, arg1, arg2, arg3, arg4);
             return task.Result;
@@ -75,7 +75,7 @@ namespace tank_client.Models
             Connection.InvokeAsync(methodName, arg1, arg2, arg3, arg4);
         }
 
-        public static object Invoke<T>(string methodName, object arg1, object arg2, object arg3, object arg4, object arg5)
+        public static T Invoke<T>(string methodName, object arg1, object arg2, object arg3, object arg4, object arg5)
         {
             Task<T> task = Connection.InvokeAsync<T>(methodName, arg1, arg2, arg3, arg4, arg5);
             return task.Result;
