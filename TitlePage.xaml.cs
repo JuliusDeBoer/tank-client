@@ -9,6 +9,6 @@ public partial class TitlePage : ContentPage
 
     private void Start(Object sender, EventArgs e)
     {
-		Navigation.PushAsync(new MainPage());
+		Navigation.PushAsync(new LoginPage());
     }
 }
