@@ -12,16 +12,6 @@
                                   PointerMoved="MoveBattleground" />
         </AbsoluteLayout.GestureRecognizers>
 
-        <ScrollView
-            HorizontalScrollBarVisibility="Always"
-            AbsoluteLayout.LayoutBounds="3, 0">
-
-            <Label
-                x:Name="logView"
-                HeightRequest="200"/>
-            
-        </ScrollView>
-
         <AbsoluteLayout x:Name="battleground">
 
             <ImageButton
@@ -48,6 +38,16 @@
             </Grid>
 
         </AbsoluteLayout>
+
+        <ScrollView
+            HorizontalScrollBarVisibility="Always"
+            AbsoluteLayout.LayoutBounds="3, 0">
+
+            <Label
+                x:Name="logView"
+                HeightRequest="200"/>
+            
+        </ScrollView>
 
     </AbsoluteLayout>
 
