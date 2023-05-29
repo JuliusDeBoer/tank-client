@@ -18,23 +18,19 @@
                 Source="rei.jpg"
                 SemanticProperties.Description="Rei from evongalion as a fast food employee!"
                 HorizontalOptions="Center"
-                WidthRequest="2000"
+                WidthRequest="1600"
+                HeightRequest="1200"
                 Pressed="BattlegroundPressed"
                 Released="BattlegroundReleased" />
 
-            <Grid>
+            <Grid
+                WidthRequest="1600"
+                HeightRequest="1200"
+                x:Name="ChessMaster"> <!-- Bad naming -->
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="100" />
-                    <RowDefinition Height="100" />
-                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100" />
-                    <ColumnDefinition Width="100" />
-                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <ImageButton WidthRequest="100" Source="tank.png" Grid.Row="1" Grid.Column="1" Clicked="ImageButton_Clicked" />
-                <ImageButton WidthRequest="100" Source="tank.png" Grid.Row="2" Grid.Column="2" Clicked="ImageButton_Clicked" />
             </Grid>
 
         </AbsoluteLayout>

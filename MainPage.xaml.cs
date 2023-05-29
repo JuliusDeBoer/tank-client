@@ -5,6 +5,10 @@ namespace tank_client;
 
 public partial class MainPage : ContentPage
 {
+    public static readonly int GRID_WIDTH = 32;
+    public static readonly int GRID_HEIGHT = 24;
+    public static readonly int CELL_SIZE = 50;
+
     private bool pressed = false;
     private bool shouldUpdateAnchor = true;
     private double anchorX = 0;
@@ -13,6 +17,37 @@ public partial class MainPage : ContentPage
     public MainPage()
     {
         InitializeComponent();
+
+        for (int i = 0; i <= GRID_WIDTH; i++)
+        {
+            ChessMaster.RowDefinitions.Add(new RowDefinition { Height = CELL_SIZE });
+        }
+
+        for (int i = 0; i <= GRID_HEIGHT; i++)
+        {
+            ChessMaster.ColumnDefinitions.Add(new ColumnDefinition { Width = CELL_SIZE });
+        }
+
+        TankCollection collection = Server.Invoke<TankCollection>("GetTanks");
+
+        foreach (Tank tank in collection.Tanks)
+        {
+            // <ImageButton WidthRequest="100" Source="tank.png" Grid.Row="1" Grid.Column="1" Clicked="ImageButton_Clicked" />
+            ImageButton element = new()
+            {
+                WidthRequest = CELL_SIZE,
+                HeightRequest = CELL_SIZE,
+                Source = "tank.png"
+            };
+
+            element.Clicked += ImageButton_Clicked;
+
+            ChessMaster.Add(element);
+            ChessMaster.SetColumn(element, tank.Position.X);
+            ChessMaster.SetRow(element, tank.Position.Y);
+
+            Log($"ID: {tank.Id} X: {tank.Position.X} Y: {tank.Position.Y}");
+        }
     }
 
     void MoveBattleground(object sender, PointerEventArgs e)

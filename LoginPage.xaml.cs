@@ -13,5 +13,7 @@ public partial class LoginPage : ContentPage
     {
 		Server.Invoke("CreateAccount", NameEntry.Text, EmailEntry.Text, PasswordEntry.Text);
 		string jwt = Server.Invoke<string>("Login", EmailEntry.Text, PasswordEntry.Text);
+
+        Navigation.PushAsync(new MainPage());
     }
 }
