@@ -32,12 +32,13 @@ public partial class MainPage : ContentPage
 
         foreach (Tank tank in collection.Tanks)
         {
-            // <ImageButton WidthRequest="100" Source="tank.png" Grid.Row="1" Grid.Column="1" Clicked="ImageButton_Clicked" />
             ImageButton element = new()
             {
                 WidthRequest = CELL_SIZE,
                 HeightRequest = CELL_SIZE,
-                Source = "tank.png"
+                Source = "tank_red.png",
+                Aspect = Aspect.Fill,
+                BackgroundColor = Microsoft.Maui.Graphics.Color.FromRgba(0, 0, 0, 0)
             };
 
             element.Clicked += ImageButton_Clicked;

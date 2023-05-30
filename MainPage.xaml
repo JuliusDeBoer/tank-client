@@ -15,8 +15,8 @@
         <AbsoluteLayout x:Name="battleground">
 
             <ImageButton
-                Source="rei.jpg"
-                SemanticProperties.Description="Rei from evongalion as a fast food employee!"
+                Source="battleground.png"
+                SemanticProperties.Description="Battleground"
                 HorizontalOptions="Center"
                 WidthRequest="1600"
                 HeightRequest="1200"
