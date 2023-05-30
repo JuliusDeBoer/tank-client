@@ -107,6 +107,11 @@ public partial class MainPage : ContentPage
             int id = collection.GetTankByPos(col, row);
 
             Log($"Tank with id {id} was on Row: {row} and Col: {col}");
+
+            Tank tank = collection.GetById(id);
+
+            UserName.Text = tank.UserName;
+            Health.Text = tank.Health.ToString();   
         }
 
     }

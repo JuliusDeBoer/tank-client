@@ -45,6 +45,22 @@
             
         </ScrollView>
 
+        <VerticalStackLayout            
+            AbsoluteLayout.LayoutBounds="0, 1"
+            WidthRequest="200"
+            HeightRequest="200"
+            AbsoluteLayout.LayoutFlags="PositionProportional">
+
+            <Label x:Name="UserName"
+                Text="USERNAME" />
+            <Label x:Name="Health"
+                Text="HEALTH"/>
+
+            <Button x:Name="Shoot"
+                Text="SHOOT?" />
+
+        </VerticalStackLayout>
+
     </AbsoluteLayout>
 
 </ContentPage>

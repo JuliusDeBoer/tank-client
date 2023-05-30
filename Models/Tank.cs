@@ -67,20 +67,27 @@ namespace tank_client.Models
 
             return -1;
         }
+
+        public Tank GetById(int id)
+        {
+            return Tanks[id - 1];
+        }
     }
 
     public class Tank
     {
         public int Id { get; set; }
+        public string UserName { get; set; }
         public int Health { get; set; }
         public int Level { get; set; }
         public int ActionPoints { get; set; }
         public Color Color { get; set; }
         public Position Position { get; set; } = new(0, 0);
 
-        public Tank(int id)
+        public Tank(int id, string userName)
         {
             Id = id;
+            UserName = userName;
         }
     }
 }
