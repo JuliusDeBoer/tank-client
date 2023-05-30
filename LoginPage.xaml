@@ -4,31 +4,61 @@
              x:Class="tank_client.LoginPage"
              Title="Login">
     <AbsoluteLayout>
-        <Label 
-            Text="Login"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center"
-            AbsoluteLayout.LayoutBounds="0.5,0.3"
-            AbsoluteLayout.LayoutFlags="PositionProportional"/>
-        <VerticalStackLayout
+        <HorizontalStackLayout
             Spacing="20"
-            AbsoluteLayout.LayoutBounds="0.5,0.8"
+            AbsoluteLayout.LayoutBounds="0.5, 0.3"
             AbsoluteLayout.LayoutFlags="PositionProportional">
-            <Entry 
-                x:Name="NameEntry"
-                Placeholder="Username" />
-            <Entry 
-                x:Name="EmailEntry"
-                Placeholder="Email" />
-            <Entry 
-                x:Name="PasswordEntry"
-                Placeholder="Password"
-                IsPassword="True" />
-            <Button
-                Text="Sign up"
-                WidthRequest="200"
-                Margin="10"
-                Clicked="SignUp" />
-        </VerticalStackLayout>
+            
+            <VerticalStackLayout
+                Spacing="20">
+               <Label 
+                    Text="SignUp"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center"/>
+                
+                <Entry 
+                    x:Name="SignUpNameEntry"
+                    Placeholder="Username" />
+                <Entry 
+                    x:Name="SignUpEmailEntry"
+                    Placeholder="Email" />
+                <Entry 
+                    x:Name="SignUpPasswordEntry"
+                    Placeholder="Password"
+                    IsPassword="True" />
+                <Button
+                    Text="Sign up"
+                    WidthRequest="200"
+                    Margin="10"
+                    Clicked="SignUp" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout
+                Spacing="20">
+                <Label 
+                    Text="Login"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center"/>
+                
+                <Entry 
+                    x:Name="LoginEmailEntry"
+                    Placeholder="Email" />
+                <Entry 
+                    x:Name="LoginPasswordEntry"
+                    Placeholder="Password"
+                    IsPassword="True" />
+                <Button
+                    Text="Login"
+                    WidthRequest="200"
+                    Margin="10"
+                    Clicked="Login" />
+            </VerticalStackLayout>
+        </HorizontalStackLayout>
+        <Label
+            x:Name="ErrorLabel"
+            Text=""
+            TextColor="red"
+            AbsoluteLayout.LayoutBounds="0.5, 0.8"
+            AbsoluteLayout.LayoutFlags="PositionProportional"/>
     </AbsoluteLayout>
 </ContentPage>
