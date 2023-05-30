@@ -31,6 +31,7 @@ public partial class MainPage : ContentPage
         }
 
         collection = Server.Invoke<TankCollection>("GetTanks");
+        Random rand = new();
 
         foreach (Tank tank in collection.Tanks)
         {
@@ -40,7 +41,8 @@ public partial class MainPage : ContentPage
                 HeightRequest = CELL_SIZE,
                 Source = "tank_red.png",
                 Aspect = Aspect.Fill,
-                BackgroundColor = Microsoft.Maui.Graphics.Color.FromRgba(0, 0, 0, 0)
+                BackgroundColor = Microsoft.Maui.Graphics.Color.FromRgba(0, 0, 0, 0),
+                ScaleX = rand.NextSingle() < 0.5f ? 1 : -1
             };
 
             element.Clicked += ImageButton_Clicked;
