@@ -5,9 +5,9 @@ namespace tank_client;
 
 public partial class MainPage : ContentPage
 {
-    public static readonly int GRID_WIDTH = 32;
-    public static readonly int GRID_HEIGHT = 24;
-    public static readonly int CELL_SIZE = 50;
+    public static readonly int GRID_WIDTH = 16;
+    public static readonly int GRID_HEIGHT = 12;
+    public static readonly int CELL_SIZE = 100;
 
     private bool pressed = false;
     private bool shouldUpdateAnchor = true;
