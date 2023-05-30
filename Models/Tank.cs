@@ -48,10 +48,25 @@ namespace tank_client.Models
         }
     }
 
-    public class Tanks
+    public class TankCollection
     {
         public int Total { get; set; }
-        public Dictionary<int, Tank> AllTanks { get; set; }
+        public Tank[] Tanks { get; set; }
+
+        // Returns -1 if no tank was found
+        public int GetTankByPos(int x, int y)
+        {
+            foreach (Tank tank in Tanks)
+            {
+                if(tank.Position.X == x
+                    && tank.Position.Y == y)
+                {
+                    return tank.Id;
+                }
+            }
+
+            return -1;
+        }
     }
 
     public class Tank

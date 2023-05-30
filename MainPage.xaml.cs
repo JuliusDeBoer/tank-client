@@ -14,6 +14,8 @@ public partial class MainPage : ContentPage
     private double anchorX = 0;
     private double anchorY = 0;
 
+    private TankCollection collection;
+
     public MainPage()
     {
         InitializeComponent();
@@ -28,7 +30,7 @@ public partial class MainPage : ContentPage
             ChessMaster.ColumnDefinitions.Add(new ColumnDefinition { Width = CELL_SIZE });
         }
 
-        TankCollection collection = Server.Invoke<TankCollection>("GetTanks");
+        collection = Server.Invoke<TankCollection>("GetTanks");
 
         foreach (Tank tank in collection.Tanks)
         {
@@ -94,27 +96,17 @@ public partial class MainPage : ContentPage
         public int Y { get; set; }
     }
 
-    private class Tank
-    {
-        public int Id { get; set; }
-        public int Health { get; set; }
-        public int Level { get; set; }
-        public int ActionPoints { get; set; }
-        public int Color { get; set; }
-        public Position Position { get; set; }
-    }
-
-    private class TankCollection
-    {
-        public int Total { get; set; }
-        public Tank[] Tanks { get; set; }
-    }
-
     private void ImageButton_Clicked(object sender, EventArgs e)
     {
-        TankCollection collection = Server.Invoke<TankCollection>("GetTanks");
+        if (sender is ImageButton button)
+        {
+            int row = ChessMaster.GetRow(button);
+            int col = ChessMaster.GetColumn(button);
+            int id = collection.GetTankByPos(col, row);
 
-        Log($"Total tanks: {collection.Total}");
+            Log($"Tank with id {id} was on Row: {row} and Col: {col}");
+        }
+
     }
 
     public void Log(string msg)
