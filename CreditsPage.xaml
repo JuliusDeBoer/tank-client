@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="tank_client.CreditsPage"
+             Title="Credits">
+    <VerticalStackLayout>
+        <Label 
+            Text="Credits"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+
+        <Label
+            Text="Lead programmer"
+            FontSize="22"
+            FontAttributes="Bold" />
+        <Label
+            Text="Julius de Boer" />
+
+        <Label
+            Text="Aditional programmers"
+            FontSize="22"
+            FontAttributes="Bold" />
+        <Label
+            Text="ChatGPT" />
+            <Label
+            Text="Stackoverflow users"  />
+
+        <Label
+            Text="Lead art designer"
+            FontSize="22"
+            FontAttributes="Bold" />
+        <Label
+            Text="Julius de Boer" />
+
+        <Label
+            Text="External art designers"
+            FontSize="22"
+            FontAttributes="Bold" />
+        <Label
+            Text="Sam Römer" />
+
+            <Label
+            Text="Hotel"
+            FontSize="22"
+            FontAttributes="Bold" />
+        <Label
+            Text="Trivago" />
+
+        <Label
+            Text="Original game"
+            FontSize="22"
+            FontAttributes="Bold" />
+        <Label
+            Text="Halfbrick studios" />
+
+        <Label
+            Text="Special thanks"
+            FontSize="22"
+            FontAttributes="Bold" />
+        <Label
+            Text="Julius de Boer" />
+        <Label
+            Text="Sam Römer" />
+        <Label
+            Text="Freek Krabben" />
+
+    </VerticalStackLayout>
+</ContentPage>

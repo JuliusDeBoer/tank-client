@@ -15,4 +15,9 @@ public partial class TitlePage : ContentPage
     {
 		Navigation.PushAsync(new LoginPage());
     }
+
+    private void Credits(Object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new CreditsPage());
+    }
 }

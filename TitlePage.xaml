@@ -16,5 +16,11 @@
             AbsoluteLayout.LayoutBounds="0.5,0.8"
             WidthRequest="200"
             AbsoluteLayout.LayoutFlags="PositionProportional"/>
+        <Button
+            Text="Credits"
+            Clicked="Credits"
+            AbsoluteLayout.LayoutBounds="0.5,0.9"
+            WidthRequest="200"
+            AbsoluteLayout.LayoutFlags="PositionProportional"/>
     </AbsoluteLayout>
 </ContentPage>
