@@ -14,7 +14,9 @@ public partial class MainPage : ContentPage
     private double anchorX = 0;
     private double anchorY = 0;
 
-    private TankCollection collection;
+    private int selectedTank = -1;
+
+    private readonly TankCollection collection;
 
     public MainPage()
     {
@@ -84,6 +86,11 @@ public partial class MainPage : ContentPage
     {
         shouldUpdateAnchor = true;
         pressed = true;
+
+        selectedTank = -1;
+        UserName.Text = String.Empty;
+        Health.Text = String.Empty;
+        Shoot.IsVisible = false;
     }
 
     private void BattlegroundReleased(object sender, EventArgs e)
@@ -104,16 +111,16 @@ public partial class MainPage : ContentPage
         {
             int row = ChessMaster.GetRow(button);
             int col = ChessMaster.GetColumn(button);
-            int id = collection.GetTankByPos(col, row);
+            selectedTank = collection.GetTankByPos(col, row);
 
-            Log($"Tank with id {id} was on Row: {row} and Col: {col}");
+            Log($"Tank with id {selectedTank} was on Row: {row} and Col: {col}");
 
-            Tank tank = collection.GetById(id);
+            Tank tank = collection.GetById(selectedTank);
 
             UserName.Text = tank.UserName;
-            Health.Text = tank.Health.ToString();   
+            Health.Text = $"{tank.Health.ToString()} HITPOINTS";
+            Shoot.IsVisible = true;
         }
-
     }
 
     public void Log(string msg)
