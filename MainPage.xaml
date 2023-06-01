@@ -33,6 +33,16 @@
                 </Grid.ColumnDefinitions>
             </Grid>
 
+            <Grid
+                WidthRequest="1600"
+                HeightRequest="1200"
+                x:Name="Overlay">
+                <Grid.RowDefinitions>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                </Grid.ColumnDefinitions>
+            </Grid>
+
         </AbsoluteLayout>
 
         <ScrollView

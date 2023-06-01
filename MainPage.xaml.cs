@@ -25,11 +25,13 @@ public partial class MainPage : ContentPage
         for (int i = 0; i <= GRID_WIDTH; i++)
         {
             ChessMaster.RowDefinitions.Add(new RowDefinition { Height = CELL_SIZE });
+            Overlay.RowDefinitions.Add(new RowDefinition { Height = CELL_SIZE });
         }
 
         for (int i = 0; i <= GRID_HEIGHT; i++)
         {
             ChessMaster.ColumnDefinitions.Add(new ColumnDefinition { Width = CELL_SIZE });
+            Overlay.ColumnDefinitions.Add(new ColumnDefinition { Width = CELL_SIZE });
         }
 
         collection = Server.Invoke<TankCollection>("GetTanks");
@@ -116,6 +118,20 @@ public partial class MainPage : ContentPage
             Log($"Tank with id {selectedTank} was on Row: {row} and Col: {col}");
 
             Tank tank = collection.GetById(selectedTank);
+
+            ImageButton element = new()
+            {
+                WidthRequest = CELL_SIZE,
+                HeightRequest = CELL_SIZE,
+                Source = "circle_green.png",
+                Aspect = Aspect.Fill,
+                BackgroundColor = Microsoft.Maui.Graphics.Color.FromRgba(0, 0, 0, 0),
+                Opacity = 0.5f
+            };
+
+            Overlay.Add(element);
+            Overlay.SetColumn(element, tank.Position.X);
+            Overlay.SetRow(element, tank.Position.Y);
 
             UserName.Text = tank.UserName;
             Health.Text = $"{tank.Health.ToString()} HITPOINTS";
