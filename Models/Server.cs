@@ -34,41 +34,41 @@ namespace tank_client.Models
 
         public static void On<T1>(string methodName, Action<T1> handler)
         {
-            Connection.On<T1>(methodName, handler<T1>);
+            Connection.On(methodName, handler);
         }
 
         public static void On<T1, T2>(string methodName, Action<T1, T2> handler)
         {
-            Connection.On<T1, T2>(methodName, handler<T1, T2>);
+            Connection.On(methodName, handler);
         }
 
         public static void On<T1, T2, T3>(string methodName, Action<T1, T2, T3> handler)
         {
-            Connection.On<T1, T2, T3>(methodName, handler<T1, T2, T3>);
+            Connection.On(methodName, handler);
         }
 
         public static void On<T1, T2, T3, T4>(string methodName, Action<T1, T2, T3, T4> handler)
         {
-            Connection.On<T1, T2, T3, T4>(methodName, handler<T1, T2, T3, T4>);
+            Connection.On(methodName, handler);
         }
 
         public static void On<T1, T2, T3, T4, T5>(string methodName, Action<T1, T2, T3, T4, T5> handler)
         {
-            Connection.On<T1, T2, T3, T4, T5>(methodName, handler<T1, T2, T3, T4, T5>);
+            Connection.On(methodName, handler);
         }
 
         public static void On<T1, T2, T3, T4, T5, T6>(string methodName, Action<T1, T2, T3, T4, T5, T6> handler)
         {
-            Connection.On<T1, T2, T3, T4, T5, T6>(methodName, handler<T1, T2, T3, T4, T5, T6>);
+            Connection.On(methodName, handler);
         }
 
         public static void On<T1, T2, T3, T4, T5, T6, T7>(string methodName, Action<T1, T2, T3, T4, T5, T6, T7> handler)
         {
-            Connection.On<T1, T2, T3, T4, T5, T6, T7>(methodName, handler<T1, T2, T3, T4, T5, T6, T7>);
+            Connection.On(methodName, handler);
         }
         public static void On<T1, T2, T3, T4, T5, T6, T7, T8>(string methodName, Action<T1, T2, T3, T4, T5, T6, T7, T8> handler)
         {
-            Connection.On<T1, T2, T3, T4, T5, T6, T7, T8>(methodName, handler<T1, T2, T3, T4, T5, T6, T7, T8>);
+            Connection.On(methodName, handler);
         }
 
         public static T Invoke<T>(string methodName)

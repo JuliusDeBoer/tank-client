@@ -15,7 +15,7 @@ public partial class MainPage : ContentPage
 
     private int selectedTank = -1;
 
-    private readonly TankCollection collection;
+    private TankCollection collection;
 
     public MainPage()
     {
@@ -56,6 +56,31 @@ public partial class MainPage : ContentPage
 
             Log($"ID: {tank.Id} X: {tank.Position.X} Y: {tank.Position.Y}");
         }
+
+        Server.On<int, Position, Position>("TankMoved", TankMoved);
+    }
+
+    private IView GetTankByPos(Position pos)
+    {
+        foreach (IView tank in ChessMaster)
+        {
+            if (ChessMaster.GetColumn(tank) == pos.X && ChessMaster.GetRow(tank) == pos.Y) { return tank; }
+        }
+
+        throw new KeyNotFoundException();
+    }
+
+    private void TankMoved(int id, Position origin, Position position)
+    {
+        IView tank = GetTankByPos(origin);
+
+        Dispatcher.Dispatch(() =>
+        {
+            ChessMaster.SetColumn(tank, position.X);
+            ChessMaster.SetRow(tank, position.Y);
+            CleanOverlay();
+            collection = Server.Invoke<TankCollection>("GetTanks");
+        });
     }
 
     void MoveBattleground(object sender, PointerEventArgs e)
@@ -89,7 +114,7 @@ public partial class MainPage : ContentPage
 
         selectedTank = -1;
         UserName.Text = String.Empty;
-        Health.Text = String.Empty;
+        Health.Text = string.Empty;
         Shoot.IsVisible = false;
     }
 
@@ -108,9 +133,9 @@ public partial class MainPage : ContentPage
     private void CleanOverlay()
     {
         // This is bad and dosnt solve the issue. But im not inclined to care
-        for(int  j = 0; j <= 32; j++)
+        for (int j = 0; j <= 32; j++)
         {
-            for(int i = 0; i < Overlay.Count; i++)
+            for (int i = 0; i < Overlay.Count; i++)
             {
                 if (Overlay[i] is ImageButton)
                 {
@@ -141,7 +166,7 @@ public partial class MainPage : ContentPage
             {
                 for (int j = 0; j < gridSize; j++)
                 {
-                    if(i == center && j == center) { continue; }
+                    if (i == center && j == center) { continue; }
 
                     ImageButton element = new()
                     {
@@ -160,7 +185,7 @@ public partial class MainPage : ContentPage
                     {
                         // I am become death. Destroyer of worlds.
                         // -- Oppenheimer
-                        if(sender is IView)
+                        if (sender is IView)
                         {
                             Tank tank = collection.GetById(LoginPage.MyTankId);
                             int x = Overlay.GetColumn((IView)sender);
@@ -169,7 +194,7 @@ public partial class MainPage : ContentPage
                             Log("I like to move it move it");
                             Log($"X: {tank.Position.X - x}, Y: {tank.Position.Y - y}");
 
-                            Server.Invoke("MoveTank", LoginPage.Auth, tank.Position.Y - y, tank.Position.X - x);
+                            Server.Invoke("MoveTank", LoginPage.Auth, (tank.Position.X - x) * -1, (tank.Position.Y - y) * -1);
                         }
                     }
                     : (object sender, EventArgs e) => { };
@@ -189,7 +214,7 @@ public partial class MainPage : ContentPage
             }
 
             UserName.Text = tank.UserName;
-            Health.Text = $"{tank.Health.ToString()} HITPOINTS";
+            Health.Text = $"{tank.Health} HITPOINTS";
             Shoot.IsVisible = true;
         }
     }
