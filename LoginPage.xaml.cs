@@ -4,6 +4,9 @@ namespace tank_client;
 
 public partial class LoginPage : ContentPage
 {
+	public static string Auth = string.Empty;
+	public static int MyTankId = -1;
+
 	public LoginPage()
 	{
 		InitializeComponent();
@@ -23,10 +26,13 @@ public partial class LoginPage : ContentPage
 			return;
 		}
 
+		Auth = jwt;
+        MyTankId = Server.Invoke<int>("GetMyTankId", Auth);
+
         Navigation.PushAsync(new MainPage());
     }
-    private void Login(Object sender, EventArgs e)
-    {
+	private void Login(Object sender, EventArgs e)
+	{
 		string? jwt = Server.Invoke<string>("Login", LoginEmailEntry.Text, LoginPasswordEntry.Text);
 
 		if (jwt == null)
@@ -35,8 +41,10 @@ public partial class LoginPage : ContentPage
 			return;
 		}
 
-		Navigation.PushAsync(new MainPage());
-    }
+		Auth = jwt;
+		MyTankId = Server.Invoke<int>("GetMyTankId", Auth);
 
+		Navigation.PushAsync(new MainPage());
+	}
 #nullable disable
 }

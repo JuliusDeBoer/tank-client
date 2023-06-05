@@ -153,6 +153,27 @@ public partial class MainPage : ContentPage
                         Opacity = 0.5f
                     };
 
+
+                    // This code once was once somewhere where it made a slight bit of sense. Now
+                    // its just hurting my eyes. Learn from my mistakes and never do a thing like this.
+                    element.Clicked += tank.Id == LoginPage.MyTankId ? (object sender, EventArgs e) =>
+                    {
+                        // I am become death. Destroyer of worlds.
+                        // -- Oppenheimer
+                        if(sender is IView)
+                        {
+                            Tank tank = collection.GetById(LoginPage.MyTankId);
+                            int x = Overlay.GetColumn((IView)sender);
+                            int y = Overlay.GetRow((IView)sender);
+
+                            Log("I like to move it move it");
+                            Log($"X: {tank.Position.X - x}, Y: {tank.Position.Y - y}");
+
+                            Server.Invoke("MoveTank", LoginPage.Auth, tank.Position.Y - y, tank.Position.X - x);
+                        }
+                    }
+                    : (object sender, EventArgs e) => { };
+
                     try
                     {
                         Overlay.SetColumn(element, tank.Position.X + (i - center));
