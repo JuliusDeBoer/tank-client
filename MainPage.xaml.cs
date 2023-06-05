@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.SignalR.Client;
-using tank_client.Models;
+﻿using tank_client.Models;
 
 namespace tank_client;
 
@@ -22,13 +21,13 @@ public partial class MainPage : ContentPage
     {
         InitializeComponent();
 
-        for (int i = 0; i <= GRID_WIDTH; i++)
+        for (int i = 0; i < GRID_HEIGHT; i++)
         {
             ChessMaster.RowDefinitions.Add(new RowDefinition { Height = CELL_SIZE });
             Overlay.RowDefinitions.Add(new RowDefinition { Height = CELL_SIZE });
         }
 
-        for (int i = 0; i <= GRID_HEIGHT; i++)
+        for (int i = 0; i < GRID_WIDTH; i++)
         {
             ChessMaster.ColumnDefinitions.Add(new ColumnDefinition { Width = CELL_SIZE });
             Overlay.ColumnDefinitions.Add(new ColumnDefinition { Width = CELL_SIZE });
@@ -79,15 +78,14 @@ public partial class MainPage : ContentPage
 
         battleground.TranslationX = pos.Value.X - anchorX;
         battleground.TranslationY = pos.Value.Y - anchorY;
-
-        //movable.TranslationX = pos.Value.X - anchorX;
-        //movable.TranslationY = pos.Value.Y - anchorY;
     }
 
     private void BattlegroundPressed(object sender, EventArgs e)
     {
         shouldUpdateAnchor = true;
         pressed = true;
+
+        CleanOverlay();
 
         selectedTank = -1;
         UserName.Text = String.Empty;
@@ -107,6 +105,21 @@ public partial class MainPage : ContentPage
         public int Y { get; set; }
     }
 
+    private void CleanOverlay()
+    {
+        // This is bad and dosnt solve the issue. But im not inclined to care
+        for(int  j = 0; j <= 32; j++)
+        {
+            for(int i = 0; i < Overlay.Count; i++)
+            {
+                if (Overlay[i] is ImageButton)
+                {
+                    Overlay.RemoveAt(i);
+                }
+            }
+        }
+    }
+
     private void ImageButton_Clicked(object sender, EventArgs e)
     {
         if (sender is ImageButton button)
@@ -119,19 +132,40 @@ public partial class MainPage : ContentPage
 
             Tank tank = collection.GetById(selectedTank);
 
-            ImageButton element = new()
-            {
-                WidthRequest = CELL_SIZE,
-                HeightRequest = CELL_SIZE,
-                Source = "circle_green.png",
-                Aspect = Aspect.Fill,
-                BackgroundColor = Microsoft.Maui.Graphics.Color.FromRgba(0, 0, 0, 0),
-                Opacity = 0.5f
-            };
+            CleanOverlay();
 
-            Overlay.Add(element);
-            Overlay.SetColumn(element, tank.Position.X);
-            Overlay.SetRow(element, tank.Position.Y);
+            int gridSize = (tank.Level * 2) + 1;
+            int center = tank.Level;
+
+            for (int i = 0; i < gridSize; i++)
+            {
+                for (int j = 0; j < gridSize; j++)
+                {
+                    if(i == center && j == center) { continue; }
+
+                    ImageButton element = new()
+                    {
+                        WidthRequest = CELL_SIZE,
+                        HeightRequest = CELL_SIZE,
+                        Source = "circle_green.png",
+                        Aspect = Aspect.Fill,
+                        BackgroundColor = Microsoft.Maui.Graphics.Color.FromRgba(0, 0, 0, 0),
+                        Opacity = 0.5f
+                    };
+
+                    try
+                    {
+                        Overlay.SetColumn(element, tank.Position.X + (i - center));
+                        Overlay.SetRow(element, tank.Position.Y + (j - center));
+                    }
+                    catch (System.ArgumentException ex)
+                    {
+                        // Dont draw circles that are not inside the map
+                    }
+
+                    Overlay.Add(element);
+                }
+            }
 
             UserName.Text = tank.UserName;
             Health.Text = $"{tank.Health.ToString()} HITPOINTS";
@@ -142,7 +176,8 @@ public partial class MainPage : ContentPage
     public void Log(string msg)
     {
         // Make sure code gets run on the UI's dispatcher thread
-        Dispatcher.Dispatch(() => {
+        Dispatcher.Dispatch(() =>
+        {
             logView.Text = msg + "\n" + logView.Text;
         });
     }
