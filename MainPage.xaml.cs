@@ -115,7 +115,12 @@ public partial class MainPage : ContentPage
             Overlay.Add(element);
             Overlay.SetColumn(element, tank.Position.X);
             Overlay.SetRow(element, tank.Position.Y);
-            Thread.Sleep(1000);
+
+            new Thread(() =>
+            {
+                Thread.Sleep(800);
+                Dispatcher.Dispatch(CleanOverlay);
+            }).Start();
 
             collection = Server.Invoke<TankCollection>("GetTanks");
 
