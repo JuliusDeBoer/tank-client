@@ -58,6 +58,16 @@ public partial class MainPage : ContentPage
         }
 
         Server.On<int, Position, Position>("TankMoved", TankMoved);
+        Server.On<int>("TankShot", TankShot);
+    }
+    private int GetTankIdByPos(Position pos)
+    {
+        foreach (Tank tank in collection.Tanks)
+        {
+            if (tank.Position.X == pos.X && tank.Position.Y == pos.Y) { return tank.Id; }
+        }
+
+        return -1;
     }
 
     private IView GetTankByPos(Position pos)
@@ -67,7 +77,7 @@ public partial class MainPage : ContentPage
             if (ChessMaster.GetColumn(tank) == pos.X && ChessMaster.GetRow(tank) == pos.Y) { return tank; }
         }
 
-        throw new KeyNotFoundException();
+        return null;
     }
 
     private void TankMoved(int id, Position origin, Position position)
@@ -81,6 +91,36 @@ public partial class MainPage : ContentPage
             CleanOverlay();
             collection = Server.Invoke<TankCollection>("GetTanks");
         });
+    }
+
+    private void TankShot(int id)
+    {
+        Tank tank = collection.GetById(id);
+        IView sprite = GetTankByPos(tank.Position);
+
+        tank.Health--;
+
+        Dispatcher.Dispatch(() =>
+        {
+            CleanOverlay();
+            Image element = new()
+            {
+                WidthRequest = CELL_SIZE,
+                HeightRequest = CELL_SIZE,
+                Source = "boom.gif",
+                Aspect = Aspect.Fill,
+                BackgroundColor = Microsoft.Maui.Graphics.Color.FromRgba(0, 0, 0, 0)
+            };
+
+            Overlay.Add(element);
+            Overlay.SetColumn(element, tank.Position.X);
+            Overlay.SetRow(element, tank.Position.Y);
+            Thread.Sleep(1000);
+
+            collection = Server.Invoke<TankCollection>("GetTanks");
+
+        });
+
     }
 
     void MoveBattleground(object sender, PointerEventArgs e)
@@ -113,7 +153,7 @@ public partial class MainPage : ContentPage
         CleanOverlay();
 
         selectedTank = -1;
-        UserName.Text = String.Empty;
+        UserName.Text = string.Empty;
         Health.Text = string.Empty;
         Shoot.IsVisible = false;
     }
@@ -124,12 +164,6 @@ public partial class MainPage : ContentPage
         pressed = false;
     }
 
-    private class Position
-    {
-        public int X { get; set; }
-        public int Y { get; set; }
-    }
-
     private void CleanOverlay()
     {
         // This is bad and dosnt solve the issue. But im not inclined to care
@@ -137,7 +171,7 @@ public partial class MainPage : ContentPage
         {
             for (int i = 0; i < Overlay.Count; i++)
             {
-                if (Overlay[i] is ImageButton)
+                if (Overlay[i] is ImageButton || Overlay[i] is Image)
                 {
                     Overlay.RemoveAt(i);
                 }
@@ -149,6 +183,7 @@ public partial class MainPage : ContentPage
     {
         if (sender is ImageButton button)
         {
+            collection.Tanks = Server.Invoke<TankCollection>("GetTanks").Tanks;
             int row = ChessMaster.GetRow(button);
             int col = ChessMaster.GetColumn(button);
             selectedTank = collection.GetTankByPos(col, row);
@@ -168,43 +203,55 @@ public partial class MainPage : ContentPage
                 {
                     if (i == center && j == center) { continue; }
 
+                    bool isMine = tank.Id == LoginPage.MyTankId;
+                    bool isTank = GetTankByPos(new Position(tank.Position.X + (i - center), tank.Position.Y + (j - center))) != null;
+
                     ImageButton element = new()
                     {
                         WidthRequest = CELL_SIZE,
                         HeightRequest = CELL_SIZE,
-                        Source = "circle_green.png",
+                        Source = isMine ? isTank ? "cross_red.png" : "circle_green.png" : "square_green.png",
                         Aspect = Aspect.Fill,
                         BackgroundColor = Microsoft.Maui.Graphics.Color.FromRgba(0, 0, 0, 0),
-                        Opacity = 0.5f
+                        Opacity = isTank && isMine ? 1.0f : 0.5f
                     };
 
 
-                    // This code once was once somewhere where it made a slight bit of sense. Now
-                    // its just hurting my eyes. Learn from my mistakes and never do a thing like this.
-                    element.Clicked += tank.Id == LoginPage.MyTankId ? (object sender, EventArgs e) =>
+                    if (isMine && !isTank)
                     {
-                        // I am become death. Destroyer of worlds.
-                        // -- Oppenheimer
-                        if (sender is IView)
+                        element.Clicked += (object sender, EventArgs e) =>
                         {
-                            Tank tank = collection.GetById(LoginPage.MyTankId);
-                            int x = Overlay.GetColumn((IView)sender);
-                            int y = Overlay.GetRow((IView)sender);
+                            if (sender is IView view)
+                            {
+                                Tank tank = collection.GetById(LoginPage.MyTankId);
+                                int x = Overlay.GetColumn(view);
+                                int y = Overlay.GetRow(view);
 
-                            Log("I like to move it move it");
-                            Log($"X: {tank.Position.X - x}, Y: {tank.Position.Y - y}");
+                                Log("I like to move it move it");
+                                Log($"X: {tank.Position.X - x}, Y: {tank.Position.Y - y}");
 
-                            Server.Invoke("MoveTank", LoginPage.Auth, (tank.Position.X - x) * -1, (tank.Position.Y - y) * -1);
-                        }
+                                Server.Invoke("MoveTank", LoginPage.Auth, (tank.Position.X - x) * -1, (tank.Position.Y - y) * -1);
+                            }
+                        };
+                    } else if(isTank && isMine)
+                    {
+                        element.Clicked += (object sender, EventArgs e) =>
+                        {
+                            if (sender is IView view)
+                            {
+                                int x = Overlay.GetColumn(view);
+                                int y = Overlay.GetRow(view);
+                                Server.Invoke("Shoot", LoginPage.Auth, GetTankIdByPos(new Position(x, y)));
+                            }
+                        };
                     }
-                    : (object sender, EventArgs e) => { };
 
                     try
                     {
                         Overlay.SetColumn(element, tank.Position.X + (i - center));
                         Overlay.SetRow(element, tank.Position.Y + (j - center));
                     }
-                    catch (System.ArgumentException ex)
+                    catch (ArgumentException)
                     {
                         // Dont draw circles that are not inside the map
                     }

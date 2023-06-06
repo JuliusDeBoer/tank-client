@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace tank_client.Models
+﻿namespace tank_client.Models
 {
     public class TankTotal
     {
@@ -70,7 +64,12 @@ namespace tank_client.Models
 
         public Tank GetById(int id)
         {
-            return Tanks[id - 1];
+            foreach(Tank tank in Tanks)
+            {
+                if(tank.Id == id) { return tank; }
+            }
+
+            throw new KeyNotFoundException();
         }
     }
 
