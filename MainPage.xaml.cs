@@ -125,7 +125,6 @@ public partial class MainPage : ContentPage
             collection = Server.Invoke<TankCollection>("GetTanks");
 
         });
-
     }
 
     void MoveBattleground(object sender, PointerEventArgs e)
