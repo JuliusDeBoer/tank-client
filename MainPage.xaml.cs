@@ -42,7 +42,7 @@ public partial class MainPage : ContentPage
             {
                 WidthRequest = CELL_SIZE,
                 HeightRequest = CELL_SIZE,
-                Source = "tank_red.png",
+                Source = $"tank_{Tank.ParseColor(tank.Color)}.png",
                 Aspect = Aspect.Fill,
                 BackgroundColor = Microsoft.Maui.Graphics.Color.FromRgba(0, 0, 0, 0),
                 ScaleX = rand.NextSingle() < 0.5f ? 1 : -1

@@ -88,5 +88,21 @@
             Id = id;
             UserName = userName;
         }
+
+        public static string ParseColor(Color color)
+        {
+            return color switch
+            {
+                Color.Red => "red",
+                Color.Orange => "orange",
+                Color.Yellow => "yellow",
+                Color.Green => "green",
+                Color.Blue => "blue",
+                Color.Purple => "purple",
+                Color.White => "white",
+                Color.Hotpink => "hotpink",
+                _ => "red",
+            };
+        }
     }
 }
