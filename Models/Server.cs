@@ -97,6 +97,7 @@ namespace tank_client.Models
             Task<T> task = Connection.InvokeAsync<T>(methodName, arg1, arg2);
             return task.Result;
         }
+
         public static void Invoke(string methodName, object arg1, object arg2)
         {
             Connection.InvokeAsync(methodName, arg1, arg2);

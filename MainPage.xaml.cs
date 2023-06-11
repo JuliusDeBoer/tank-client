@@ -237,7 +237,8 @@ public partial class MainPage : ContentPage
                                 Server.Invoke("MoveTank", LoginPage.Auth, (tank.Position.X - x) * -1, (tank.Position.Y - y) * -1);
                             }
                         };
-                    } else if(isTank && isMine)
+                    }
+                    else if (isTank && isMine)
                     {
                         element.Clicked += (object sender, EventArgs e) =>
                         {
@@ -252,6 +253,13 @@ public partial class MainPage : ContentPage
 
                     try
                     {
+                        // Dont draw chips that are not inside the grid
+                        if (tank.Position.X + (i - center) >= GRID_WIDTH
+                            || tank.Position.Y + (j - center) >= GRID_HEIGHT)
+                        {
+                            return;
+                        }
+
                         Overlay.SetColumn(element, tank.Position.X + (i - center));
                         Overlay.SetRow(element, tank.Position.Y + (j - center));
                     }
