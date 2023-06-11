@@ -64,10 +64,6 @@
             <Label x:Name="UserName" />
             <Label x:Name="Health" />
 
-            <Button x:Name="Shoot"
-                Text="SHOOT?"
-                IsVisible="False" />
-
         </VerticalStackLayout>
 
     </AbsoluteLayout>
